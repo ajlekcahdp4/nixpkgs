@@ -41398,4 +41398,6 @@ with pkgs;
   insulator2 = callPackage ../applications/misc/insulator2 {};
 
   animdl = python3Packages.callPackage ../applications/video/animdl { };
+
+  remill = callPackage ../development/compilers/remill {};
 }
