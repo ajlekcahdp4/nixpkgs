@@ -4,16 +4,30 @@
   fetchFromGitHub,
   cmake,
   ninja,
-  llvmPackages_13,
+  llvmPackages_14,
   glog,
   gflags,
   git,
   gtest,
+  libffi,
   libxml2,
   xed
 }:
 let
-  llvmPackages = llvmPackages_13;
+  llvmPackages = llvmPackages_14;
+  sleigh = stdenv.mkDerivation rec {
+    pname = "sleigh";
+
+    src = fetchFromGitHub {
+      owner = "lifting-bits";
+      repo = "sleigh";
+      rev = "7c6b742";
+      sha256 = "sha256-3ThTyx8fWhQh/gFbsk3Omls8+GOpBFgmVyyIiBmh9Rs=";
+    };
+    buildInputs = [
+      cmake
+    ];
+  };
 in stdenv.mkDerivation rec {
   pname = "remill";
   version = "5.0.7";
@@ -44,7 +58,9 @@ in stdenv.mkDerivation rec {
     glog
     gflags
     libxml2
-  ];
+    libffi
+    sleigh
+ ];
 
   cmakeFlags = [
     "-DUSE_SYSTEM_DEPENDENCIES=ON"
