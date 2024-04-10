@@ -1,0 +1,37 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index febd658..e88a604 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -121,23 +121,6 @@ target_link_libraries(thirdparty_gflags INTERFACE
+   gflags
+ )
+ 
+-set(sleigh_ENABLE_TESTS OFF)
+-set(sleigh_ADDITIONAL_PATCHES "${CMAKE_CURRENT_SOURCE_DIR}/patches/sleigh/x86-ia.patch;${CMAKE_CURRENT_SOURCE_DIR}/patches/sleigh/arm-thumb.patch")
+-
+-# GHIDRA SLEIGH
+-FetchContent_Declare(sleigh
+-  GIT_REPOSITORY https://github.com/lifting-bits/sleigh.git
+-  GIT_TAG 5ee2f2c16250a6529108e6a6fff89e0f147502d2
+-)
+-
+-FetchContent_MakeAvailable(sleigh)
+-add_library(thirdparty_sleigh INTERFACE)
+-target_link_libraries(thirdparty_sleigh INTERFACE
+-  sleigh::sla
+-  sleigh::decomp
+-  sleigh::support
+-)
+-
+ # Windows SDK
+ add_library(thirdparty_win32 INTERFACE)
+ 
+@@ -252,7 +235,7 @@ target_compile_definitions(remill_settings INTERFACE
+   "REMILL_BUILD_SEMANTICS_DIR_SPARC64=\"${REMILL_BUILD_SEMANTICS_DIR_SPARC64}\""
+ )
+ 
+-set(THIRDPARTY_LIBRARY_LIST thirdparty_llvm thirdparty_xed thirdparty_glog thirdparty_gflags thirdparty_sleigh)
++set(THIRDPARTY_LIBRARY_LIST thirdparty_llvm thirdparty_xed thirdparty_glog thirdparty_gflags )
+ target_link_libraries(remill_settings INTERFACE
+   ${THIRDPARTY_LIBRARY_LIST}
+ )

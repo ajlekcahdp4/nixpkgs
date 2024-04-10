@@ -1,0 +1,23 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 863ce85..ef3e025 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -232,7 +232,8 @@ target_compile_definitions(remill_settings INTERFACE
+   "REMILL_BUILD_SEMANTICS_DIR_SPARC64=\"${REMILL_BUILD_SEMANTICS_DIR_SPARC64}\""
+ )
+ 
+-set(THIRDPARTY_LIBRARY_LIST thirdparty_llvm ${XED_LIBRARY} thirdparty_glog thirdparty_gflags )
++set(THIRDPARTY_LIBRARY_LIST_NO_XED thirdparty_llvm thirdparty_glog thirdparty_gflags )
++set(THIRDPARTY_LIBRARY_LIST ${THIRDPARTY_LIBRARY_LIST_NO_XED} ${XED_LIBRARY} )
+ target_link_libraries(remill_settings INTERFACE
+   ${THIRDPARTY_LIBRARY_LIST}
+ )
+@@ -298,7 +299,7 @@ add_subdirectory(bin)
+ if(REMILL_ENABLE_INSTALL_TARGET)
+   install(TARGETS remill EXPORT remillTargets)
+ 
+-  install(TARGETS remill_settings ${THIRDPARTY_LIBRARY_LIST}
++  install(TARGETS remill_settings ${THIRDPARTY_LIBRARY_LIST_NO_XED}
+     EXPORT remillTargets
+   )
+ 
