@@ -1,0 +1,26 @@
+diff --git a/src/setup-ghidra-source.cmake b/src/setup-ghidra-source.cmake
+index f4b8632..e25bbbd 100644
+--- a/src/setup-ghidra-source.cmake
++++ b/src/setup-ghidra-source.cmake
+@@ -73,20 +73,7 @@ list(APPEND ghidra_patches ${sleigh_ADDITIONAL_PATCHES})
+ 
+ message(STATUS "Using Ghidra version ${ghidra_version} at git ref ${ghidra_short_commit}")
+ 
+-include(FetchContent)
+-
+-# Verbose fetch content updates
+-set(FETCHCONTENT_QUIET OFF)
+-
+-# Write out source directory with identifiable version info
+-FetchContent_Declare(GhidraSource
+-  GIT_REPOSITORY https://github.com/NationalSecurityAgency/ghidra
+-  GIT_TAG ${ghidra_git_tag}
+-  GIT_PROGRESS TRUE
+-  GIT_SHALLOW ${ghidra_shallow}
+-  ${ghidra_patches}
+-)
+-FetchContent_MakeAvailable(GhidraSource)
++set(ghidrasource_SOURCE_DIR ${GHIDRA_INSTALL_DIR})
+ 
+ message(STATUS "Ghidra source located at '${ghidrasource_SOURCE_DIR}'")
+ 

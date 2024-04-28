@@ -11,12 +11,23 @@
   gtest,
   libffi,
   libxml2,
-  xed
+  xed,
+  fetchgit,
+  ghidra,
+  zlib
 }:
 let
   llvmPackages = llvmPackages_14;
+  ghidraSource = fetchgit {
+    url = "https://github.com/NationalSecurityAgency/ghidra";
+    sha256 = "sha256-3pJXwZW1ltvA31vy3Occbnvdy8ksXrFf0NLksUvgdQk=";
+#    owner = "NationalSecurityAgency";
+#    repo = "ghidra";
+#    rev = "v10.2.3";
+  };
   sleigh = stdenv.mkDerivation rec {
     pname = "sleigh";
+    version = "7c6b742";
 
     src = fetchFromGitHub {
       owner = "lifting-bits";
@@ -24,8 +35,20 @@ let
       rev = "7c6b742";
       sha256 = "sha256-3ThTyx8fWhQh/gFbsk3Omls8+GOpBFgmVyyIiBmh9Rs=";
     };
+
+    patches = [
+      ./sleigh-no-fetch-content.patch
+    ];
+
     buildInputs = [
       cmake
+      git
+      ghidra
+      zlib
+    ];
+
+    cmakeFlags = [
+      "-DGHIDRA_INSTALL_DIR=${ghidraSource}"
     ];
   };
 in stdenv.mkDerivation rec {
